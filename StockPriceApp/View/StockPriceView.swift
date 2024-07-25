@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol StockPriceViewState: ObservableObject {
-  var rowModel: [String: Any] { get }
+  var rowModel: [String: String] { get }
   var cacheStocks: [String] { get }
 }
 
@@ -37,8 +37,8 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
 // MARK: Preview
 
 #if DEBUG
-private final class StockViewModelMock: StockViewModel {
-  var rowModel: [String : Any] = ["前日終值" : "1942.5円", "始值" : "1949.5F1", "高值" : "1969.5円", "安值" : "1942.581", "出来高" : "5,208,000株", "52週高值" : "1969.5円", "52週安值" : "1942.5円"]
+private final class StockViewModelMock: StockViewModel {  
+  var rowModel: [String : String] = ["前日終值" : "1942.5円", "始值" : "1949.5F1", "高值" : "1969.5円", "安值" : "1942.581", "出来高" : "5,208,000株", "52週高值" : "1969.5円", "52週安值" : "1942.5円"]
   var cacheStocks: [String] = ["NVDA", "YMM", "FSLR", "IMMR", "GILT", "SMCI"]
   func fetchStockInfo(for code: String) { }
   func addStocks(newStockCode: String) { }

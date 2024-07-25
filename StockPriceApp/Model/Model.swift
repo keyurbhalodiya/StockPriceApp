@@ -51,12 +51,10 @@ struct Meta: Codable {
     let hasPrePostMarketData: Bool?
     let gmtoffset: Int?
     let timezone, exchangeTimezoneName: String?
-    let regularMarketPrice, fiftyTwoWeekHigh: Int?
-    let fiftyTwoWeekLow: Double?
-    let regularMarketDayHigh: Int?
-    let regularMarketDayLow: Double?
-    let regularMarketVolume, chartPreviousClose, previousClose, scale: Int?
-    let priceHint: Int?
+    let fiftyTwoWeekHigh, fiftyTwoWeekLow: Double?
+    let regularMarketPrice, regularMarketDayHigh, regularMarketDayLow: Double?
+    let chartPreviousClose, previousClose: Double?
+    let regularMarketVolume, scale, priceHint: Int?
     let currentTradingPeriod: CurrentTradingPeriod?
     let tradingPeriods: [[Post]]?
     let dataGranularity, range: String?

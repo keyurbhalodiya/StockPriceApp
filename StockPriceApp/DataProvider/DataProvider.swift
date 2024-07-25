@@ -40,6 +40,6 @@ extension DataProvider {
 
 extension DataProvider {
   func fetchStockInfo(for code: String) async throws -> Chart? {
-    return nil
+    try await NetworkService.shared.getData(stockCode: code, type: Chart.self)
   }
 }

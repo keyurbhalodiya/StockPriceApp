@@ -19,6 +19,9 @@
 		714E0F2E2C523C4B00811538 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F2D2C523C4B00811538 /* DataProvider.swift */; };
 		714E0F302C523C5C00811538 /* StockRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F2F2C523C5C00811538 /* StockRepository.swift */; };
 		714E0F322C523CB800811538 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F312C523CB800811538 /* Model.swift */; };
+		714E0F342C52625F00811538 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F332C52625F00811538 /* NetworkService.swift */; };
+		714E0F382C5269A100811538 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F372C5269A100811538 /* Constant.swift */; };
+		714E0F3A2C526C5B00811538 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F392C526C5B00811538 /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		714E0F2D2C523C4B00811538 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		714E0F2F2C523C5C00811538 /* StockRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockRepository.swift; sourceTree = "<group>"; };
 		714E0F312C523CB800811538 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		714E0F332C52625F00811538 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		714E0F372C5269A100811538 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		714E0F392C526C5B00811538 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				714E0F2F2C523C5C00811538 /* StockRepository.swift */,
+				714E0F332C52625F00811538 /* NetworkService.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -186,6 +193,8 @@
 		714E0F282C523BFF00811538 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				714E0F372C5269A100811538 /* Constant.swift */,
+				714E0F392C526C5B00811538 /* Extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -322,7 +331,10 @@
 			files = (
 				714E0F322C523CB800811538 /* Model.swift in Sources */,
 				714E0F302C523C5C00811538 /* StockRepository.swift in Sources */,
+				714E0F382C5269A100811538 /* Constant.swift in Sources */,
+				714E0F342C52625F00811538 /* NetworkService.swift in Sources */,
 				714E0F2A2C523C3200811538 /* StockPriceView.swift in Sources */,
+				714E0F3A2C526C5B00811538 /* Extension.swift in Sources */,
 				714E0EFC2C523BB400811538 /* ContentView.swift in Sources */,
 				714E0F2E2C523C4B00811538 /* DataProvider.swift in Sources */,
 				714E0EFA2C523BB400811538 /* StockPriceAppApp.swift in Sources */,
