@@ -14,6 +14,11 @@
 		714E0F0B2C523BB500811538 /* StockPriceAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F0A2C523BB500811538 /* StockPriceAppTests.swift */; };
 		714E0F152C523BB500811538 /* StockPriceAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F142C523BB500811538 /* StockPriceAppUITests.swift */; };
 		714E0F172C523BB500811538 /* StockPriceAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F162C523BB500811538 /* StockPriceAppUITestsLaunchTests.swift */; };
+		714E0F2A2C523C3200811538 /* StockPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F292C523C3100811538 /* StockPriceView.swift */; };
+		714E0F2C2C523C3E00811538 /* StockPriceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F2B2C523C3E00811538 /* StockPriceViewModel.swift */; };
+		714E0F2E2C523C4B00811538 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F2D2C523C4B00811538 /* DataProvider.swift */; };
+		714E0F302C523C5C00811538 /* StockRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F2F2C523C5C00811538 /* StockRepository.swift */; };
+		714E0F322C523CB800811538 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714E0F312C523CB800811538 /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +49,11 @@
 		714E0F102C523BB500811538 /* StockPriceAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StockPriceAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		714E0F142C523BB500811538 /* StockPriceAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPriceAppUITests.swift; sourceTree = "<group>"; };
 		714E0F162C523BB500811538 /* StockPriceAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPriceAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		714E0F292C523C3100811538 /* StockPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPriceView.swift; sourceTree = "<group>"; };
+		714E0F2B2C523C3E00811538 /* StockPriceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPriceViewModel.swift; sourceTree = "<group>"; };
+		714E0F2D2C523C4B00811538 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		714E0F2F2C523C5C00811538 /* StockRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockRepository.swift; sourceTree = "<group>"; };
+		714E0F312C523CB800811538 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +104,12 @@
 		714E0EF82C523BB400811538 /* StockPriceApp */ = {
 			isa = PBXGroup;
 			children = (
+				714E0F262C523BFF00811538 /* View */,
+				714E0F232C523BFF00811538 /* ViewModel */,
+				714E0F242C523BFF00811538 /* DataProvider */,
+				714E0F272C523BFF00811538 /* NetworkService */,
+				714E0F252C523BFF00811538 /* Model */,
+				714E0F282C523BFF00811538 /* Utility */,
 				714E0EF92C523BB400811538 /* StockPriceAppApp.swift */,
 				714E0EFB2C523BB400811538 /* ContentView.swift */,
 				714E0EFD2C523BB500811538 /* Assets.xcassets */,
@@ -125,6 +141,53 @@
 				714E0F162C523BB500811538 /* StockPriceAppUITestsLaunchTests.swift */,
 			);
 			path = StockPriceAppUITests;
+			sourceTree = "<group>";
+		};
+		714E0F232C523BFF00811538 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				714E0F2B2C523C3E00811538 /* StockPriceViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		714E0F242C523BFF00811538 /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				714E0F2D2C523C4B00811538 /* DataProvider.swift */,
+			);
+			path = DataProvider;
+			sourceTree = "<group>";
+		};
+		714E0F252C523BFF00811538 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				714E0F312C523CB800811538 /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		714E0F262C523BFF00811538 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				714E0F292C523C3100811538 /* StockPriceView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		714E0F272C523BFF00811538 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				714E0F2F2C523C5C00811538 /* StockRepository.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		714E0F282C523BFF00811538 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +320,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				714E0F322C523CB800811538 /* Model.swift in Sources */,
+				714E0F302C523C5C00811538 /* StockRepository.swift in Sources */,
+				714E0F2A2C523C3200811538 /* StockPriceView.swift in Sources */,
 				714E0EFC2C523BB400811538 /* ContentView.swift in Sources */,
+				714E0F2E2C523C4B00811538 /* DataProvider.swift in Sources */,
 				714E0EFA2C523BB400811538 /* StockPriceAppApp.swift in Sources */,
+				714E0F2C2C523C3E00811538 /* StockPriceViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +415,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -404,7 +472,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -478,7 +546,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.StockPriceAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -497,7 +565,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.StockPriceAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
