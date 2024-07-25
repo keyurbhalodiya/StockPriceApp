@@ -24,8 +24,8 @@ extension Optional where Wrapped == Double {
     guard let self else { return "NA" }
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
-    formatter.minimumFractionDigits = 3
-    formatter.maximumFractionDigits = 3
+    formatter.minimumFractionDigits = 1
+    formatter.maximumFractionDigits = 1
     return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
   }
 }
@@ -47,8 +47,6 @@ extension Optional where Wrapped == Int {
     guard let self else { return "NA" }
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
-    formatter.minimumFractionDigits = 3
-    formatter.maximumFractionDigits = 3
     return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
   }
 }

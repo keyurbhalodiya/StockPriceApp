@@ -13,11 +13,8 @@ final class StockRepository: CacheDataProviding {
     static let cacheStocksCodeKey: String = "cacheStocksCodeKey"
   }
   
-  static let shared = StockRepository()
   private let userDefault = UserDefaults.standard
-  
-  private init() { }
-  
+    
   private func updateCache(shouldAdd: Bool = true, stockCode: String) {
     var cacheData = cacheStocks
     if shouldAdd {

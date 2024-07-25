@@ -8,15 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
+  var body: some View {
+    let dataProvider = DataProvider(repo: StockRepository())
+    let viewModel = StockPriceViewModel(dataProvider: dataProvider)
+    StockPriceView(viewModel: viewModel)
+  }
 }
 
 #Preview {

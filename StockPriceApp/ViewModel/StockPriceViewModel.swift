@@ -14,7 +14,7 @@ protocol CacheDataProviding {
 }
 
 protocol NetworkDataProviding {
-  func fetchStockInfo(for code: String) async throws -> Chart?
+  func fetchStockInfo(for code: String) async throws -> StockPrice?
 }
 
 final class StockPriceViewModel: StockViewModel {
@@ -33,7 +33,7 @@ final class StockPriceViewModel: StockViewModel {
     Task {
         do {
           let stockInfo = try await dataProvider.fetchStockInfo(for: code)
-          self.generateRowModel(with: stockInfo?.result?.first)
+          self.generateRowModel(with: stockInfo?.chart?.result?.first)
         } catch {
             print("Request failed with error: \(error)")
         }

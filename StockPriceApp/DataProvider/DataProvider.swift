@@ -39,7 +39,7 @@ extension DataProvider {
 // MARK: NetworkDataProviding
 
 extension DataProvider {
-  func fetchStockInfo(for code: String) async throws -> Chart? {
-    try await NetworkService.shared.getData(stockCode: code, type: Chart.self)
+  func fetchStockInfo(for code: String) async throws -> StockPrice? {
+    try await NetworkService.shared.getData(stockCode: code, type: StockPrice.self)
   }
 }
