@@ -22,7 +22,7 @@ final class StockPriceViewModel: StockViewModel {
   // MARK: Dependencies
   private let dataProvider: DataProviding
   
-  @Published private(set) var rowModel: [String: String] = [:]
+  @Published private(set) var rowModel: [RowModel] = []
   @Published private(set) var cacheStocks: [String] = []
 
   init(dataProvider: DataProviding) {
@@ -58,14 +58,14 @@ private extension StockPriceViewModel {
   func generateRowModel(with result: Result?) {
     guard let result else { return }
     let currenctSymbol = result.meta?.currency?.currencySymbol() ?? ""
-    var tempRowModel: [String: String] = [:]
-    tempRowModel[Constant.lastDayValue] = (result.meta?.previousClose.stringValue() ?? "") + currenctSymbol
-    tempRowModel[Constant.initialValue] = (result.indicators?.quote?[safe: 0]?.quoteOpen?[safe: 0]?.stringValue() ?? "") + currenctSymbol
-    tempRowModel[Constant.highValue] = (result.meta?.regularMarketDayHigh.stringValue() ?? "") + currenctSymbol
-    tempRowModel[Constant.lowValue] = (result.meta?.regularMarketDayLow.stringValue() ?? "") + currenctSymbol
-    tempRowModel[Constant.turnover] = (result.meta?.regularMarketVolume.stringValue() ?? "") + "株"
-    tempRowModel[Constant.fiftyTwoWeekHigh] = (result.meta?.fiftyTwoWeekHigh.stringValue() ?? "") + currenctSymbol
-    tempRowModel[Constant.fiftyTwoWeekLow] = (result.meta?.fiftyTwoWeekLow.stringValue() ?? "") + currenctSymbol
+    var tempRowModel: [RowModel] = []
+    tempRowModel.append(RowModel(title: Constant.lastDayValue, value: (result.meta?.previousClose.stringValue() ?? "") + currenctSymbol))
+    tempRowModel.append(RowModel(title: Constant.initialValue, value: (result.indicators?.quote?[safe: 0]?.quoteOpen?[safe: 0]?.stringValue() ?? "") + currenctSymbol))
+    tempRowModel.append(RowModel(title: Constant.highValue, value: (result.meta?.regularMarketDayHigh.stringValue() ?? "") + currenctSymbol))
+    tempRowModel.append(RowModel(title: Constant.lowValue, value: (result.meta?.regularMarketDayLow.stringValue() ?? "") + currenctSymbol))
+    tempRowModel.append(RowModel(title: Constant.turnover, value: (result.meta?.regularMarketVolume.stringValue() ?? "") + "株"))
+    tempRowModel.append(RowModel(title: Constant.fiftyTwoWeekHigh, value: (result.meta?.fiftyTwoWeekHigh.stringValue() ?? "") + currenctSymbol))
+    tempRowModel.append(RowModel(title: Constant.fiftyTwoWeekLow, value: (result.meta?.fiftyTwoWeekLow.stringValue() ?? "") + currenctSymbol))
     self.rowModel = tempRowModel
   }
   

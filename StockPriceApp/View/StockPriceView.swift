@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol StockPriceViewState: ObservableObject {
-  var rowModel: [String: String] { get }
+  var rowModel: [RowModel] { get }
   var cacheStocks: [String] { get }
 }
 
@@ -30,7 +30,18 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
   }
   
   var body: some View {
-    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    VStack {
+      List(viewModel.rowModel, id: \.self) { row in
+        HStack {
+          Text(row.title)
+            .foregroundStyle(.secondary)
+            .font(.system(size: 16, weight: .medium, design: .default))
+          Spacer()
+          Text(row.value)
+            .font(.system(size: 16, weight: .semibold, design: .default))
+        }
+      }
+    }
   }
 }
 
@@ -38,7 +49,7 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
 
 #if DEBUG
 private final class StockViewModelMock: StockViewModel {  
-  var rowModel: [String : String] = ["前日終值" : "1942.5円", "始值" : "1949.5F1", "高值" : "1969.5円", "安值" : "1942.581", "出来高" : "5,208,000株", "52週高值" : "1969.5円", "52週安值" : "1942.5円"]
+  var rowModel: [RowModel] = [RowModel(title: "前日終值", value: "1942.5円"), RowModel(title: "始值", value: "1949.5円"), RowModel(title: "高值", value: "1969.5円"), RowModel(title: "安值", value: "1942.5円"), RowModel(title: "出来高", value: "5,208,000株"), RowModel(title: "52週高值", value: "1969.5円"), RowModel(title: "52週安值", value: "1942.5円")]
   var cacheStocks: [String] = ["NVDA", "YMM", "FSLR", "IMMR", "GILT", "SMCI"]
   func fetchStockInfo(for code: String) { }
   func addStocks(newStockCode: String) { }

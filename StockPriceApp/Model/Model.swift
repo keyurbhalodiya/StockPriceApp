@@ -7,6 +7,12 @@
 
 import Foundation
 
+// MARK: - RowModel
+struct RowModel: Hashable {
+  let title: String
+  let value: String
+}
+
 // MARK: - StockPrice
 struct StockPrice: Codable {
     let chart: Chart?
