@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
   /// Get currency symbol
@@ -50,3 +51,12 @@ extension Optional where Wrapped == Int {
     return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
   }
 }
+
+extension UIApplication {
+  func endEditing() {
+    guard let windowScene = connectedScenes.first as? UIWindowScene else { return }
+    let keyWindow = windowScene.windows.first { $0.isKeyWindow }
+    keyWindow?.endEditing(true)
+  }
+}
+

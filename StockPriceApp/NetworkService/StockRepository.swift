@@ -18,6 +18,7 @@ final class StockRepository: CacheDataProviding {
   private func updateCache(shouldAdd: Bool = true, stockCode: String) {
     var cacheData = cacheStocks
     if shouldAdd {
+      guard !cacheData.contains(where: { $0 == stockCode }) else { return }
       cacheData.append(stockCode)
     } else {
       cacheData.removeAll { code in

@@ -47,6 +47,7 @@ struct SearchBar: UIViewRepresentable {
       isEditing = false
       guard let searchText = searchBar.text, !searchText.isEmpty else { return }
       searchTapHandler(searchText)
+      searchBar.text = ""
     }
   }
   
@@ -58,6 +59,7 @@ struct SearchBar: UIViewRepresentable {
     let searchBar = UISearchBar(frame: .zero)
     searchBar.delegate = context.coordinator
     searchBar.showsCancelButton = true
+    searchBar.autocapitalizationType = .allCharacters
     return searchBar
   }
   

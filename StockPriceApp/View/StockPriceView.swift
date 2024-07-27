@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol StockPriceViewState: ObservableObject {
-  var rowModel: [RowModel] { get }
+  var stockInfo: StockInfo? { get }
   var filterStocks: [String] { get }
 }
 
@@ -39,16 +39,25 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
         SearchBar(text: $searchText, isEditing: $isEditing) { searchText in
           viewModel.fetchStockInfo(for: searchText)
         }
-
+        
         if isEditing {
           List(viewModel.filterStocks, id: \.self) { stock in
             HStack {
               Text(stock)
                 .font(.system(size: 16, weight: .regular, design: .default))
+              Spacer()
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+              viewModel.fetchStockInfo(for: stock)
+              isEditing = false
+              UIApplication.shared.endEditing()
             }
           }
         } else {
-          List(viewModel.rowModel, id: \.self) { row in
+          Text(viewModel.stockInfo?.stockCode ?? "")
+            .font(.system(size: 18, weight: .semibold, design: .default))
+          List(viewModel.stockInfo?.rowModel ?? [], id: \.self) { row in
             HStack {
               Text(row.title)
                 .foregroundStyle(.secondary)
@@ -76,7 +85,7 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
 
 #if DEBUG
 private final class StockViewModelMock: StockViewModel {  
-  var rowModel: [RowModel] = [RowModel(title: "前日終值", value: "1942.5円"), RowModel(title: "始值", value: "1949.5円"), RowModel(title: "高值", value: "1969.5円"), RowModel(title: "安值", value: "1942.5円"), RowModel(title: "出来高", value: "5,208,000株"), RowModel(title: "52週高值", value: "1969.5円"), RowModel(title: "52週安值", value: "1942.5円")]
+  var stockInfo: StockInfo? = StockInfo(stockCode: "9434.T", rowModel: [RowModel(title: "前日終值", value: "1942.5円"), RowModel(title: "始值", value: "1949.5円"), RowModel(title: "高值", value: "1969.5円"), RowModel(title: "安值", value: "1942.5円"), RowModel(title: "出来高", value: "5,208,000株"), RowModel(title: "52週高值", value: "1969.5円"), RowModel(title: "52週安值", value: "1942.5円")])
   var filterStocks: [String] = ["NVDA", "YMM", "FSLR", "IMMR", "GILT", "SMCI"]
   func fetchStockInfo(for code: String) { }
   func addStocks(newStockCode: String) { }
@@ -90,4 +99,3 @@ private final class StockViewModelMock: StockViewModel {
 }
 
 #endif
-

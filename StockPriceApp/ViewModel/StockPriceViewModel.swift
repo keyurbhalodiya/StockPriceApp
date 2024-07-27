@@ -22,8 +22,8 @@ final class StockPriceViewModel: StockViewModel {
   // MARK: Dependencies
   private let dataProvider: DataProviding
   
-  private let cacheStocks: [String]
-  @Published private(set) var rowModel: [RowModel] = []
+  private var cacheStocks: [String]
+  @Published private(set) var stockInfo: StockInfo?
   @Published private(set) var filterStocks: [String] = []
 
   init(dataProvider: DataProviding) {
@@ -33,10 +33,13 @@ final class StockPriceViewModel: StockViewModel {
   }
   
   func fetchStockInfo(for code: String) {
+    stockInfo = nil
     Task {
         do {
           let stockInfo = try await dataProvider.fetchStockInfo(for: code)
-          self.generateRowModel(with: stockInfo?.chart?.result?.first)
+          guard let results = stockInfo?.chart?.result, let result = results[safe: 0] else { return }
+          self.generateRowModel(with: result)
+          self.addStocks(newStockCode: code)
         } catch {
             print("Request failed with error: \(error)")
         }
@@ -45,6 +48,9 @@ final class StockPriceViewModel: StockViewModel {
   
   func addStocks(newStockCode: String) {
     dataProvider.addStocks(newStockCode: newStockCode)
+    guard !cacheStocks.contains(where: { $0 == newStockCode }) else { return }
+    cacheStocks.append(newStockCode)
+    filterStocks.append(newStockCode)
   }
   
   func removeStock(stockCode: String) {
@@ -62,8 +68,7 @@ final class StockPriceViewModel: StockViewModel {
 
 private extension StockPriceViewModel {
   
-  func generateRowModel(with result: Result?) {
-    guard let result else { return }
+  func generateRowModel(with result: Result) {
     let currenctSymbol = result.meta?.currency?.currencySymbol() ?? ""
     var tempRowModel: [RowModel] = []
     tempRowModel.append(RowModel(title: Constant.lastDayValue, value: (result.meta?.previousClose.stringValue() ?? "") + currenctSymbol))
@@ -73,7 +78,8 @@ private extension StockPriceViewModel {
     tempRowModel.append(RowModel(title: Constant.turnover, value: (result.meta?.regularMarketVolume.stringValue() ?? "") + "株"))
     tempRowModel.append(RowModel(title: Constant.fiftyTwoWeekHigh, value: (result.meta?.fiftyTwoWeekHigh.stringValue() ?? "") + currenctSymbol))
     tempRowModel.append(RowModel(title: Constant.fiftyTwoWeekLow, value: (result.meta?.fiftyTwoWeekLow.stringValue() ?? "") + currenctSymbol))
-    self.rowModel = tempRowModel
+    DispatchQueue.main.async { [unowned self] in
+      self.stockInfo = StockInfo(stockCode: result.meta?.symbol ?? "", rowModel: tempRowModel)
+    }
   }
-  
 }

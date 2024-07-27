@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct StockInfo: Hashable {
+  let stockCode: String
+  let rowModel: [RowModel]
+}
+
 // MARK: - RowModel
 struct RowModel: Hashable {
   let title: String
