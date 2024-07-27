@@ -22,11 +22,14 @@ final class StockPriceViewModel: StockViewModel {
   // MARK: Dependencies
   private let dataProvider: DataProviding
   
+  private let cacheStocks: [String]
   @Published private(set) var rowModel: [RowModel] = []
-  @Published private(set) var cacheStocks: [String] = []
+  @Published private(set) var filterStocks: [String] = []
 
   init(dataProvider: DataProviding) {
     self.dataProvider = dataProvider
+    self.cacheStocks = dataProvider.cacheStocks
+    self.filterStocks = self.cacheStocks
   }
   
   func fetchStockInfo(for code: String) {
@@ -47,13 +50,17 @@ final class StockPriceViewModel: StockViewModel {
   func removeStock(stockCode: String) {
     dataProvider.removeStock(stockCode: stockCode)
   }
+  
+  func searchStock(with code: String) {
+    filterStocks = cacheStocks.filter({ $0.localizedCaseInsensitiveContains(code) })
+  }
+  
+  func didCancelSearchStock() {
+    filterStocks = cacheStocks
+  }
 }
 
 private extension StockPriceViewModel {
-  
-  func getCacheData() {
-    self.cacheStocks = dataProvider.cacheStocks
-  }
   
   func generateRowModel(with result: Result?) {
     guard let result else { return }
