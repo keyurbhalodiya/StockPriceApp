@@ -12,6 +12,11 @@ struct StockInfo: Hashable {
   let rowModel: [RowModel]
 }
 
+struct StockChart: Hashable {
+  let timestamp: TimeInterval
+  let close: Double
+}
+  
 // MARK: - RowModel
 struct RowModel: Hashable {
   let title: String
@@ -20,11 +25,11 @@ struct RowModel: Hashable {
 
 // MARK: - StockPrice
 struct StockPrice: Codable {
-    let chart: Chart?
+    let chart: ChartInfo?
 }
 
 // MARK: - Chart
-struct Chart: Codable {
+struct ChartInfo: Codable {
     let result: [Result]?
     let error: StockPriceError?
 }
@@ -32,7 +37,7 @@ struct Chart: Codable {
 // MARK: - Result
 struct Result: Codable {
     let meta: Meta?
-    let timestamp: [Int]?
+    let timestamp: [TimeInterval]?
     let indicators: Indicators?
 }
 

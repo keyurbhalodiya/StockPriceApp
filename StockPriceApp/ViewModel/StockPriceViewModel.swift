@@ -25,7 +25,8 @@ final class StockPriceViewModel: StockViewModel {
   private var cacheStocks: [String]
   @Published private(set) var stockInfo: StockInfo?
   @Published private(set) var filterStocks: [String] = []
-
+  @Published private(set) var stockChart: [StockChart]?
+  
   init(dataProvider: DataProviding) {
     self.dataProvider = dataProvider
     self.cacheStocks = dataProvider.cacheStocks
@@ -78,8 +79,16 @@ private extension StockPriceViewModel {
     tempRowModel.append(RowModel(title: Constant.turnover, value: (result.meta?.regularMarketVolume.stringValue() ?? "") + "株"))
     tempRowModel.append(RowModel(title: Constant.fiftyTwoWeekHigh, value: (result.meta?.fiftyTwoWeekHigh.stringValue() ?? "") + currenctSymbol))
     tempRowModel.append(RowModel(title: Constant.fiftyTwoWeekLow, value: (result.meta?.fiftyTwoWeekLow.stringValue() ?? "") + currenctSymbol))
+    
     DispatchQueue.main.async { [unowned self] in
       self.stockInfo = StockInfo(stockCode: result.meta?.symbol ?? "", rowModel: tempRowModel)
+      guard let values = result.indicators?.quote?.first?.low, let timestamp = result.timestamp else { return }
+      var chartData: [StockChart] = []
+      for (index, value) in values.enumerated() {
+        guard let value else { continue }
+        chartData.append(StockChart(timestamp: timestamp[index], close: value))
+      }
+      self.stockChart = chartData
     }
   }
 }
