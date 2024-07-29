@@ -55,6 +55,7 @@ final class StockPriceViewModel: StockViewModel {
   }
   
   func removeStock(stockCode: String) {
+    self.cacheStocks.removeAll(where: { $0 == stockCode })
     dataProvider.removeStock(stockCode: stockCode)
   }
   

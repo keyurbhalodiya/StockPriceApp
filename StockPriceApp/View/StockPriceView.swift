@@ -42,49 +42,9 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
         }
         
         if isEditing {
-          if viewModel.filterStocks.count == 0 {
-            Spacer()
-            Text("Enter stock code")
-              .foregroundStyle(.secondary)
-              .font(.system(size: 28, weight: .regular, design: .default))
-            Spacer()
-          } else {
-            List(viewModel.filterStocks, id: \.self) { stock in
-              HStack {
-                Text(stock)
-                  .font(.system(size: 16, weight: .regular, design: .default))
-                Spacer()
-              }
-              .contentShape(Rectangle())
-              .onTapGesture {
-                viewModel.fetchStockInfo(for: stock)
-                isEditing = false
-                UIApplication.shared.endEditing()
-              }
-            }
-          }
+          FilteredStocksListView(viewModel: viewModel, isEditing: $isEditing)
         } else {
-          Text(viewModel.stockInfo?.stockCode ?? "")
-            .font(.system(size: 18, weight: .semibold, design: .default))
-
-          VStack {
-            ForEach(viewModel.stockInfo?.rowModel ?? [], id: \.self) { row in
-              HStack {
-                Text(row.title)
-                  .foregroundStyle(.secondary)
-                  .font(.system(size: 16, weight: .medium, design: .default))
-                Spacer()
-                Text(row.value)
-                  .font(.system(size: 16, weight: .semibold, design: .default))
-              }
-              Spacer()
-            }
-            Spacer()
-            HStack {
-              LineChartView(stockChart: viewModel.stockChart)
-            }
-          }
-          .padding(16)
+          StockDetailView(stockInfo: viewModel.stockInfo, stockChart: viewModel.stockChart)
         }
       }
       .navigationTitle("Stock")
