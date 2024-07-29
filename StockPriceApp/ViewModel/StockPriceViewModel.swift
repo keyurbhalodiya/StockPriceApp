@@ -27,7 +27,8 @@ final class StockPriceViewModel: StockViewModel {
   @Published private(set) var filterStocks: [String] = []
   @Published private(set) var stockChart: [StockChart]?
   @Published private(set) var isLoading: Bool = false
-
+  @Published var showingAlert: Bool = false
+  
   init(dataProvider: DataProviding) {
     self.dataProvider = dataProvider
     self.cacheStocks = dataProvider.cacheStocks
@@ -40,13 +41,17 @@ final class StockPriceViewModel: StockViewModel {
     Task { @MainActor in
         do {
           let stockInfo = try await dataProvider.fetchStockInfo(for: code)
-          guard let results = stockInfo?.chart?.result, let result = results[safe: 0] else { return }
+          isLoading = false
+          guard let results = stockInfo?.chart?.result, let result = results[safe: 0] else {
+            showingAlert = true
+            return
+          }
           self.generateRowModel(with: result)
           self.createStockChartDate(with: result)
           self.addStocks(newStockCode: code)
-          isLoading = false
         } catch {
           isLoading = false
+          showingAlert = true
           print("Request failed with error: \(error)")
         }
     }

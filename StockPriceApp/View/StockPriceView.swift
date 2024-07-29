@@ -12,6 +12,7 @@ protocol StockPriceViewState: ObservableObject {
   var filterStocks: [String] { get }
   var stockChart: [StockChart]? { get }
   var isLoading: Bool { get }
+  var showingAlert: Bool { get set }
 }
 
 protocol StockPriceViewListner {
@@ -32,6 +33,8 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
 
   @State private var searchText: String = ""
   @State private var isEditing: Bool = false
+  @State private var showingAlert: Bool = false
+  
   public init(viewModel: ViewModel) {
     self._viewModel = StateObject(wrappedValue: viewModel)
   }
@@ -61,6 +64,16 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
     .onChange(of: viewModel.isLoading) { newValue in
         isLoading.wrappedValue = newValue
     }
+    .onChange(of: viewModel.showingAlert) { newValue in
+      $showingAlert.wrappedValue = newValue
+    }
+    .alert("Somthing went wrong", isPresented: $showingAlert) {
+        Button("OK", role: .cancel) { 
+          viewModel.showingAlert = false
+        }
+    } message: {
+        Text("No data found, symbol may be delisted")
+    }
   }
 }
 
@@ -72,7 +85,8 @@ private final class StockViewModelMock: StockViewModel {
   var filterStocks: [String] = ["NVDA", "YMM", "FSLR", "IMMR", "GILT", "SMCI"]
   var stockChart: [StockChart]? = [StockChart(timestamp: 1, close: 1020), StockChart(timestamp: 2, close: 1820), StockChart(timestamp: 3, close: 1345)]
   var isLoading: Bool = true
-  
+  var showingAlert: Bool = false
+
   func fetchStockInfo(for code: String) { }
   func removeStock(stockCode: String) { }
   func searchStock(with code: String) { }
