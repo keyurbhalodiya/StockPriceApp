@@ -34,20 +34,5 @@ struct FilteredStocksListView<ViewModel: StockViewModel>: View {
         }
       }
     }
-    /*
-    List(viewModel.filterStocks, id: \.self) { stock in
-      HStack {
-        Text(stock)
-          .font(.system(size: 16, weight: .regular, design: .default))
-        Spacer()
-      }
-      .contentShape(Rectangle())
-      .onTapGesture {
-        viewModel.fetchStockInfo(for: stock)
-        isEditing = false
-        UIApplication.shared.endEditing()
-      }
-    }
-     */
   }
 }

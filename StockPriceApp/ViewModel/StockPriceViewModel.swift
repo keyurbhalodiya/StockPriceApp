@@ -26,7 +26,8 @@ final class StockPriceViewModel: StockViewModel {
   @Published private(set) var stockInfo: StockInfo?
   @Published private(set) var filterStocks: [String] = []
   @Published private(set) var stockChart: [StockChart]?
-  
+  @Published private(set) var isLoading: Bool = false
+
   init(dataProvider: DataProviding) {
     self.dataProvider = dataProvider
     self.cacheStocks = dataProvider.cacheStocks
@@ -34,24 +35,21 @@ final class StockPriceViewModel: StockViewModel {
   }
   
   func fetchStockInfo(for code: String) {
+    isLoading = true
     stockInfo = nil
-    Task {
+    Task { @MainActor in
         do {
           let stockInfo = try await dataProvider.fetchStockInfo(for: code)
           guard let results = stockInfo?.chart?.result, let result = results[safe: 0] else { return }
           self.generateRowModel(with: result)
+          self.createStockChartDate(with: result)
           self.addStocks(newStockCode: code)
+          isLoading = false
         } catch {
-            print("Request failed with error: \(error)")
+          isLoading = false
+          print("Request failed with error: \(error)")
         }
     }
-  }
-  
-  func addStocks(newStockCode: String) {
-    dataProvider.addStocks(newStockCode: newStockCode)
-    guard !cacheStocks.contains(where: { $0 == newStockCode }) else { return }
-    cacheStocks.append(newStockCode)
-    filterStocks.append(newStockCode)
   }
   
   func removeStock(stockCode: String) {
@@ -70,6 +68,13 @@ final class StockPriceViewModel: StockViewModel {
 
 private extension StockPriceViewModel {
   
+  func addStocks(newStockCode: String) {
+    dataProvider.addStocks(newStockCode: newStockCode)
+    guard !cacheStocks.contains(where: { $0 == newStockCode }) else { return }
+    cacheStocks.append(newStockCode)
+    filterStocks.append(newStockCode)
+  }
+  
   func generateRowModel(with result: Result) {
     let currenctSymbol = result.meta?.currency?.currencySymbol() ?? ""
     var tempRowModel: [RowModel] = []
@@ -80,16 +85,16 @@ private extension StockPriceViewModel {
     tempRowModel.append(RowModel(title: Constant.turnover, value: (result.meta?.regularMarketVolume.stringValue() ?? "") + "株"))
     tempRowModel.append(RowModel(title: Constant.fiftyTwoWeekHigh, value: (result.meta?.fiftyTwoWeekHigh.stringValue() ?? "") + currenctSymbol))
     tempRowModel.append(RowModel(title: Constant.fiftyTwoWeekLow, value: (result.meta?.fiftyTwoWeekLow.stringValue() ?? "") + currenctSymbol))
-    
-    DispatchQueue.main.async { [unowned self] in
-      self.stockInfo = StockInfo(stockCode: result.meta?.symbol ?? "", rowModel: tempRowModel)
-      guard let values = result.indicators?.quote?.first?.low, let timestamp = result.timestamp else { return }
-      var chartData: [StockChart] = []
-      for (index, value) in values.enumerated() {
-        guard let value else { continue }
-        chartData.append(StockChart(timestamp: timestamp[index], close: value))
-      }
-      self.stockChart = chartData
+    self.stockInfo = StockInfo(stockCode: result.meta?.symbol ?? "", rowModel: tempRowModel)
+  }
+  
+  func createStockChartDate(with result: Result) {
+    guard let values = result.indicators?.quote?.first?.low, let timestamp = result.timestamp else { return }
+    var chartData: [StockChart] = []
+    for (index, value) in values.enumerated() {
+      guard let value else { continue }
+      chartData.append(StockChart(timestamp: timestamp[index], close: value))
     }
+    self.stockChart = chartData
   }
 }

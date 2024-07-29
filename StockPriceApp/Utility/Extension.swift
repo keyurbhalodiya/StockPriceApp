@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 extension String {
   /// Get currency symbol
@@ -60,3 +61,10 @@ extension UIApplication {
   }
 }
 
+extension View {
+  func hudOverlay(_ isShowing: Bool) -> some View {
+    modifier(
+      LoadingIndicatorModifier(isShowing: isShowing)
+    )
+  }
+}

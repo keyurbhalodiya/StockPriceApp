@@ -11,11 +11,11 @@ protocol StockPriceViewState: ObservableObject {
   var stockInfo: StockInfo? { get }
   var filterStocks: [String] { get }
   var stockChart: [StockChart]? { get }
+  var isLoading: Bool { get }
 }
 
 protocol StockPriceViewListner {
   func fetchStockInfo(for code: String)
-  func addStocks(newStockCode: String)
   func removeStock(stockCode: String)
   func searchStock(with code: String)
   func didCancelSearchStock()
@@ -28,6 +28,8 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
   // MARK: Dependencies
   @StateObject private var viewModel: ViewModel
   
+  @Environment(\.isLoading) private var isLoading
+
   @State private var searchText: String = ""
   @State private var isEditing: Bool = false
   public init(viewModel: ViewModel) {
@@ -44,7 +46,7 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
         if isEditing {
           FilteredStocksListView(viewModel: viewModel, isEditing: $isEditing)
         } else {
-          StockDetailView(stockInfo: viewModel.stockInfo, stockChart: viewModel.stockChart)
+          StockDetailView(stockInfo: viewModel.stockInfo, stockChart: viewModel.stockChart, isLoading: viewModel.isLoading)
         }
       }
       .navigationTitle("Stock")
@@ -56,18 +58,22 @@ struct StockPriceView<ViewModel: StockViewModel>: View {
         viewModel.searchStock(with: newValue)
       }
     }
+    .onChange(of: viewModel.isLoading) { newValue in
+        isLoading.wrappedValue = newValue
+    }
   }
 }
 
 // MARK: Preview
 
 #if DEBUG
-private final class StockViewModelMock: StockViewModel {  
+private final class StockViewModelMock: StockViewModel {
   var stockInfo: StockInfo? = StockInfo(stockCode: "9434.T", rowModel: [RowModel(title: "前日終值", value: "1942.5円"), RowModel(title: "始值", value: "1949.5円"), RowModel(title: "高值", value: "1969.5円"), RowModel(title: "安值", value: "1942.5円"), RowModel(title: "出来高", value: "5,208,000株"), RowModel(title: "52週高值", value: "1969.5円"), RowModel(title: "52週安值", value: "1942.5円")])
   var filterStocks: [String] = ["NVDA", "YMM", "FSLR", "IMMR", "GILT", "SMCI"]
   var stockChart: [StockChart]? = [StockChart(timestamp: 1, close: 1020), StockChart(timestamp: 2, close: 1820), StockChart(timestamp: 3, close: 1345)]
+  var isLoading: Bool = true
+  
   func fetchStockInfo(for code: String) { }
-  func addStocks(newStockCode: String) { }
   func removeStock(stockCode: String) { }
   func searchStock(with code: String) { }
   func didCancelSearchStock() { }

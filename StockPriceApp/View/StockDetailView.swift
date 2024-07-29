@@ -10,6 +10,7 @@ import SwiftUI
 struct StockDetailView: View {
   var stockInfo: StockInfo?
   var stockChart: [StockChart]?
+  var isLoading: Bool
   
   var body: some View {
     Text(stockInfo?.stockCode ?? "")
@@ -34,7 +35,7 @@ struct StockDetailView: View {
         }
       } else {
         Spacer()
-        Text("Enter stock code")
+        Text(isLoading ? "" : "Enter stock code")
           .foregroundStyle(.secondary)
           .font(.system(size: 28, weight: .regular, design: .default))
         Spacer()
