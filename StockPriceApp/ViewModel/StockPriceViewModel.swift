@@ -37,12 +37,12 @@ final class StockPriceViewModel: StockViewModel {
   
   func fetchStockInfo(for code: String) {
     isLoading = true
-    stockInfo = nil
     Task { @MainActor in
         do {
           let stockInfo = try await dataProvider.fetchStockInfo(for: code)
           isLoading = false
           guard let results = stockInfo?.chart?.result, let result = results[safe: 0] else {
+            self.stockInfo = nil
             showingAlert = true
             return
           }
@@ -50,6 +50,7 @@ final class StockPriceViewModel: StockViewModel {
           self.createStockChartDate(with: result)
           self.addStocks(newStockCode: code)
         } catch {
+          stockInfo = nil
           isLoading = false
           showingAlert = true
           print("Request failed with error: \(error)")
@@ -59,6 +60,7 @@ final class StockPriceViewModel: StockViewModel {
   
   func removeStock(stockCode: String) {
     self.cacheStocks.removeAll(where: { $0 == stockCode })
+    self.filterStocks.removeAll(where: { $0 == stockCode })
     dataProvider.removeStock(stockCode: stockCode)
   }
   
